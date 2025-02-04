@@ -17,12 +17,12 @@ function App() {
   const [turns,setTurns] =useState(0)
   const [choiceOne,setChoiceOne] = useState(null)
   const [choiceTwo,setChoiceTwo] = useState(null)
-  const [choiceThree,setChoiceThree] = useState(null)
+  // const [choiceThree,setChoiceThree] = useState(null)
   const [disabled,setDisabled] = useState(false)
 
   //SHUGFFLE CARDS
   const shuffleCards = () =>{
-    const shuffleCards = [...cardImages,...cardImages,...cardImages]
+    const shuffleCards = [...cardImages,...cardImages]
     .sort(()=>Math.random()-0.5)
     .map((card)=>({...card,id:Math.random()/100}))
 
@@ -34,15 +34,15 @@ function App() {
  const handleChoice = (card) =>{
   // console.log(card)
   choiceOne ? setChoiceTwo(card) : setChoiceOne(card) 
-  choiceTwo ? setChoiceThree(card): setChoiceTwo(card)
+  // choiceTwo ? setChoiceThree(card): setChoiceTwo(card)
  }
  console.log(cards) 
 
  //comparing  selected choices 
  useEffect(()=>{
-  if(choiceOne && choiceTwo && choiceThree){
+  if(choiceOne && choiceTwo){
     // setDisabled(true)
-    if(choiceOne.src===choiceTwo.src === choiceThree.src){
+    if(choiceOne.src===choiceTwo.src){
       // console.log("cards matched")
       // resetTurns()
       setcards((prevCards)=>{
@@ -57,17 +57,17 @@ function App() {
             {
               return {...card,matched:true}
             } 
-          else{
-            if(card.src==choiceThree.src)
-            {
-              return{...card,matched:true}
-            }
+          // else{
+            // if(card.src==choiceThree.src)
+            // {
+            //   return{...card,matched:true}
+            // }
             else{
            return card
             }
         }
       
-      }
+      // }
       })
     })
     resetTurns() 
@@ -79,13 +79,13 @@ function App() {
       setTimeout(()=>resetTurns(),1000)
     }
   }
- },[choiceOne,choiceTwo, choiceThree])
+ },[choiceOne,choiceTwo])
 
  //reset choices and turns
  const resetTurns =() =>{
   setChoiceOne(null)
   setChoiceTwo(null)
-  setChoiceThree(null)
+  // setChoiceThree(null)
   setDisabled(false)
   setTurns((prevTurns) =>(prevTurns+1))
  }
@@ -102,7 +102,7 @@ function App() {
             key={card.id} 
             card={card} 
             handleChoice={handleChoice}
-            flipped={card===choiceOne|| card===choiceTwo || card === choiceThree || card.matched}
+            flipped={card===choiceOne|| card===choiceTwo || card.matched}
             disabled={disabled}
               />
           )})}
